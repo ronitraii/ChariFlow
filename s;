@@ -1,0 +1,83 @@
+[33mcommit d17bb2c8634891af61f67095a0cdf01ce77a27f2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mronit[m[33m, [m[1;31morigin/ronit[m[33m)[m
+Author: ronitraii <ronitganglani5@gmail.com>
+Date:   Mon Jun 9 13:48:32 2025 +0500
+
+     Making the Taker/Requester page
+
+[33mcommit fc610d3ccc94306569e9e1af1ee4bff6ebb252ec[m
+Author: ronitraii <ronitganglani5@gmail.com>
+Date:   Sun Jun 8 17:03:54 2025 +0500
+
+     Added SHow full request page
+
+[33mcommit ba43eb030c4c6cd55d52ac6989a09e6d2db9bd2e[m
+Author: ronitraii <ronitganglani5@gmail.com>
+Date:   Fri Jun 6 13:25:57 2025 +0500
+
+     Added Basic donation page and its commponents
+
+[33mcommit 819a7c3f8512ce484cbb17ef2121a93bfb7cad8c[m
+Author: ronitraii <ronitganglani5@gmail.com>
+Date:   Fri Jun 6 13:10:43 2025 +0500
+
+     Working on new donate something else page
+
+[33mcommit 8e113d187a7286019865b88362f22c1b6ab67df0[m
+Author: ronitraii <ronitganglani5@gmail.com>
+Date:   Fri Jun 6 12:44:25 2025 +0500
+
+     Working on donation Page and its commponents
+
+[33mcommit 7426e89a2cbb6efcacb79dbb5969df473494a821[m
+Author: ronitraii <ronitganglani5@gmail.com>
+Date:   Fri Jun 6 12:40:35 2025 +0500
+
+    Normalize line endings
+
+[33mcommit 2e8cb522d3c291a12d6221e0935baafec9960ff6[m
+Author: samlinux7 <samiansss7@gmail.com>
+Date:   Sat May 3 14:52:21 2025 +0500
+
+     Working on donation Page and its commponents
+
+[33mcommit cdf55faf896ec957f21046ea7b49431cfc025aab[m
+Author: ronitraii <ronitganglani5@gmail.com>
+Date:   Sun Apr 20 20:21:52 2025 +0500
+
+    Made login page by modyfing signup page
+
+[33mcommit a38230d97e8a9d5f0e9485e2b94a48c89965ab5c[m
+Author: ronitraii <ronitganglani5@gmail.com>
+Date:   Sun Apr 20 12:35:05 2025 +0500
+
+    Added some css and basic things
+
+[33mcommit 2d51a0d7cefcfe7570025eac6e1598ed4a114b42[m
+Author: ronitraii <ronitganglani5@gmail.com>
+Date:   Sun Apr 20 12:18:50 2025 +0500
+
+    Basic Signup Page
+
+[33mcommit 95260021bbf461f422a3566cb8d9e22bf1666f95[m
+Author: samlinux7 <samiansss7@gmail.com>
+Date:   Sat Apr 19 18:43:37 2025 +0500
+
+    Colors added
+
+[33mcommit 187b7f56523d36526fbd384c1a06ac4af86704ef[m
+Author: samlinux7 <samiansss7@gmail.com>
+Date:   Sat Apr 19 18:37:48 2025 +0500
+
+    Page file edited
+
+[33mcommit b8d33ca30e97fe49aa9bb49cf4017fc3f1d7e33a[m
+Author: ronitraii <ronitganglani5@gmail.com>
+Date:   Sat Apr 19 18:34:23 2025 +0500
+
+    Folder Addition
+
+[33mcommit 0c07974986efec2265a1e7cb83e308917e7ff917[m
+Author: ronitraii <ronitganglani5@gmail.com>
+Date:   Sat Apr 19 18:23:04 2025 +0500
+
+    Reset logic
