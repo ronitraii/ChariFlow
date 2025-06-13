@@ -20,7 +20,7 @@ function NavigationBar() {
                 <div className="flex justify-between items-center h-16">
                     {/* Logo / Brand */}
                     <div className="flex-shrink-0 text-2xl font-bold text-blue-600">
-                        <Link to="/">MyWebsite</Link>
+                        <Link to="/">Chariflow</Link>
                     </div>
 
                     {/* Desktop Menu */}

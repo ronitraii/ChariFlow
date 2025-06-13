@@ -7,7 +7,7 @@ function DonorPage() {
   const [view, setView] = useState('default'); // 'default' | 'donationForm' | 'somethingElse'
 
   return (
-    <div className="pt-20 bg-gray-50 min-h-screen w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="pt-20 bg-gray-50 min-h-screen w-full px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto space-y-12">
         {/* Show RequestFeed only in default view */}
         {view === 'default' && (

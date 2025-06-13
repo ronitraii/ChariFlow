@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRequests } from '../../context/RequestsContext';
-import './VerifyRequest.css';
 
 const VerifyRequest = () => {
   const { addRequest } = useRequests();
@@ -90,23 +89,49 @@ const VerifyRequest = () => {
   };
 
   return (
-    <div className="verify-container">
-      <h2>Verify Your Request</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Upload NIC/ID Image:</label>
-        <input type="file" accept="image/*" onChange={(e) => setNicImage(e.target.files[0])} required />
+    <div className="max-w-lg mx-auto mt-20 mb-10 p-6 bg-white border border-gray-300 rounded-lg shadow-md font-sans">
+      <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">Verify Your Request</h2>
+      
+      <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-black mb-1">Upload NIC/ID Image:</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setNicImage(e.target.files[0])}
+            required
+            className="text-black block w-full text-sm file:mr-4 file:py-2 file:px-4 file:border file:rounded-md file:border-gray-300 file:text-sm file:bg-gray-100 file:text-gray-700"
+          />
+        </div>
 
-        <input type="text" placeholder="Contact Number" value={contact} onChange={(e) => setContact(e.target.value)} required />
-        <textarea placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)} required />
+        <input
+          type="text"
+          placeholder="Contact Number"
+          value={contact}
+          onChange={(e) => setContact(e.target.value)}
+          required
+          className="text-black px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring focus:border-blue-400"
+        />
 
-        <hr />
-        <h4>Online Transaction Accounts (1–4)</h4>
+        <textarea
+          placeholder="Address"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          required
+          rows={3}
+          className="text-black px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:outline-none focus:ring focus:border-blue-400"
+        />
+
+        <hr className="my-2" />
+        <h4 className="text-lg font-medium text-black">Online Transaction Accounts (1–4)</h4>
+
         {accounts.map((account, index) => (
-          <div key={index} className="account-field">
+          <div key={index} className="bg-gray-50 p-4 rounded-md border border-gray-200 space-y-2 text-gray-700">
             <select
               value={account.platform}
               onChange={(e) => handleAccountChange(index, 'platform', e.target.value)}
               required
+              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
             >
               <option value="">Select Platform</option>
               <option value="JazzCash">JazzCash</option>
@@ -116,32 +141,56 @@ const VerifyRequest = () => {
               <option value="Raast ID">Raast ID</option>
               <option value="IBAN">Bank IBAN</option>
             </select>
+
             <input
               type="text"
               placeholder="Account Number or IBAN"
               value={account.accountNumber}
               onChange={(e) => handleAccountChange(index, 'accountNumber', e.target.value)}
               required
+              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
             />
+
             <input
               type="text"
               placeholder="Account Holder Name"
               value={account.accountHolderName}
               onChange={(e) => handleAccountChange(index, 'accountHolderName', e.target.value)}
               required
+              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
             />
+
             {accounts.length > 1 && (
-              <button type="button" onClick={() => removeAccountField(index)}>Remove</button>
+              <button
+                type="button"
+                onClick={() => removeAccountField(index)}
+                className="text-sm text-red-600 hover:underline"
+              >
+                Remove
+              </button>
             )}
           </div>
         ))}
-        {accounts.length < 4 && (
-          <button type="button" onClick={addAccountField}>+ Add Another Account</button>
-        )}
-        <hr />
 
-        {error && <p className="error">{error}</p>}
-        <button type="submit">Submit for Verification</button>
+        {accounts.length < 4 && (
+          <button
+            type="button"
+            onClick={addAccountField}
+            className="text-blue-600 text-sm font-medium hover:underline self-start"
+          >
+            + Add Another Account
+          </button>
+        )}
+
+        <hr className="my-2" />
+        {error && <p className="text-red-600 text-sm">{error}</p>}
+
+        <button
+          type="submit"
+          className="mt-2 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+        >
+          Submit for Verification
+        </button>
       </form>
     </div>
   );

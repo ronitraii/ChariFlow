@@ -23,28 +23,21 @@ const SuccessStories = () => {
     ];
 
     return (
-        <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-            <h1 style={{ textAlign: 'center', color: '#333' }}>Success Stories</h1>
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px' }}>
+        <div className="py-28 px-6 min-h-[100vh] bg-gray-50">
+            <h1 className="text-4xl font-bold text-center text-indigo-600 mb-12">Success Stories</h1>
+            <div className="flex flex-wrap justify-center gap-6">
                 {stories.map((story) => (
                     <div
                         key={story.id}
-                        style={{
-                            border: '1px solid #ddd',
-                            borderRadius: '8px',
-                            padding: '15px',
-                            maxWidth: '300px',
-                            textAlign: 'center',
-                            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                        }}
+                        className="bg-white shadow-md rounded-xl p-6 max-w-xs text-center transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
                     >
                         <img
                             src={story.image}
                             alt={story.name}
-                            style={{ width: '100px', height: '100px', borderRadius: '50%', marginBottom: '10px' }}
+                            className="w-24 h-24 mx-auto rounded-full mb-4 object-cover"
                         />
-                        <h3 style={{ color: '#555' }}>{story.name}</h3>
-                        <p style={{ color: '#777', fontSize: '14px' }}>{story.story}</p>
+                        <h3 className="text-xl font-semibold text-gray-700">{story.name}</h3>
+                        <p className="text-gray-600 text-sm mt-2">{story.story}</p>
                     </div>
                 ))}
             </div>

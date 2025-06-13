@@ -20,13 +20,12 @@ const DonateSomethingElse = ({ onBack }) => {
   const [beneficiaries, setBeneficiaries] = useState('');
   const [organizer, setOrganizer] = useState('');
   const [organizerRole, setOrganizerRole] = useState('');
-  const [accounts, setAccounts] = useState([
-    { type: '', number: '', holder: '' }
-  ]);
+  const [accounts, setAccounts] = useState([{ type: '', number: '', holder: '' }]);
   const [error, setError] = useState('');
 
   const accountOptions = [
-    'JazzCash', 'Easypaisa', 'SadaPay', 'NayaPay', 'Raast ID', 'IBAN', 'Meezan Bank', 'UBL', 'HBL', 'Bank Alfalah', 'Other'
+    'JazzCash', 'Easypaisa', 'SadaPay', 'NayaPay', 'Raast ID',
+    'IBAN', 'Meezan Bank', 'UBL', 'HBL', 'Bank Alfalah', 'Other'
   ];
 
   const generateUniqueId = () => {
@@ -67,7 +66,7 @@ const DonateSomethingElse = ({ onBack }) => {
         city,
         category,
         desc: description,
-        image: "",
+        image: '',
         organizer,
         organizerRole,
       };
@@ -99,8 +98,8 @@ const DonateSomethingElse = ({ onBack }) => {
         organizerRole,
         raised: 0,
         supporters: 0,
-        accounts, 
-         takerId: userId,
+        accounts,
+        takerId: userId,
       };
 
       localStorage.setItem('pendingRequest', JSON.stringify(newRequest));
@@ -109,61 +108,98 @@ const DonateSomethingElse = ({ onBack }) => {
   };
 
   return (
-    <div className="custom-donation">
-      <h2>{role === 'donor' ? 'Custom Donation' : 'Request Something Else'}</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder={role === 'donor' ? 'What are you donating?' : 'Title of request'} required />
-        <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder="City" required />
-        <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} placeholder="Category" required />
-        <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder={role === 'donor' ? 'Description' : 'Detailed description of your request'} required />
+    <div className="max-w-3xl mx-auto p-6 bg-black rounded-lg shadow-md mt-8">
+      <h2 className="text-2xl font-semibold mb-6 text-center">
+        {role === 'donor' ? 'Custom Donation' : 'Request Something Else'}
+      </h2>
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input className="w-full border rounded p-2" type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder={role === 'donor' ? 'What are you donating?' : 'Title of request'} required />
+        <input className="w-full border rounded p-2" type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder="City" required />
+        <input className="w-full border rounded p-2" type="text" value={category} onChange={(e) => setCategory(e.target.value)} placeholder="Category" required />
+        <textarea className="w-full border rounded p-2" value={description} onChange={(e) => setDescription(e.target.value)} placeholder={role === 'donor' ? 'Description' : 'Detailed description of your request'} required />
 
         {role === 'taker' && (
           <>
-            <input type="number" value={goal} onChange={(e) => setGoal(e.target.value)} placeholder="Goal amount (e.g. 1000)" required min="1" />
-            <input type="text" value={urgency} onChange={(e) => setUrgency(e.target.value)} placeholder="Urgency (e.g. High, Medium, Low)" required />
-            <input type="text" value={timeline} onChange={(e) => setTimeline(e.target.value)} placeholder="Timeline or deadline" required />
-            <input type="text" value={beneficiaries} onChange={(e) => setBeneficiaries(e.target.value)} placeholder="Beneficiaries (e.g. 40 Grade 5 students)" required />
-            <input type="text" value={organizer} onChange={(e) => setOrganizer(e.target.value)} placeholder="Organizer name" required />
-            <input type="text" value={organizerRole} onChange={(e) => setOrganizerRole(e.target.value)} placeholder="Organizer role (e.g. School Principal)" required />
+            <input className="w-full border rounded p-2" type="number" value={goal} onChange={(e) => setGoal(e.target.value)} placeholder="Goal amount (e.g. 1000)" required min="1" />
+            <input className="w-full border rounded p-2" type="text" value={urgency} onChange={(e) => setUrgency(e.target.value)} placeholder="Urgency (e.g. High, Medium, Low)" required />
+            <input className="w-full border rounded p-2" type="text" value={timeline} onChange={(e) => setTimeline(e.target.value)} placeholder="Timeline or deadline" required />
+            <input className="w-full border rounded p-2" type="text" value={beneficiaries} onChange={(e) => setBeneficiaries(e.target.value)} placeholder="Beneficiaries (e.g. 40 Grade 5 students)" required />
+            <input className="w-full border rounded p-2" type="text" value={organizer} onChange={(e) => setOrganizer(e.target.value)} placeholder="Organizer name" required />
+            <input className="w-full border rounded p-2" type="text" value={organizerRole} onChange={(e) => setOrganizerRole(e.target.value)} placeholder="Organizer role (e.g. School Principal)" required />
 
-            <h4>Online Donation Accounts (1–4)</h4>
-            {accounts.map((acc, index) => (
-              <div key={index} style={{ marginBottom: '10px', border: '1px solid #ccc', padding: '10px' }}>
-                <select value={acc.type} onChange={(e) => handleAccountChange(index, 'type', e.target.value)} required>
-                  <option value="">Select Account Type</option>
-                  {accountOptions.map((opt, i) => (
-                    <option key={i} value={opt}>{opt}</option>
-                  ))}
-                </select>
-                <input
-                  type="text"
-                  value={acc.number}
-                  onChange={(e) => handleAccountChange(index, 'number', e.target.value)}
-                  placeholder="Account Number or IBAN"
-                  required
-                />
-                <input
-                  type="text"
-                  value={acc.holder}
-                  onChange={(e) => handleAccountChange(index, 'holder', e.target.value)}
-                  placeholder="Account Holder Name"
-                  required
-                />
-                {accounts.length > 1 && (
-                  <button type="button" onClick={() => handleRemoveAccount(index)}>Remove</button>
-                )}
-              </div>
-            ))}
-            {accounts.length < 4 && (
-              <button type="button" onClick={handleAddAccount}>Add Another Account</button>
-            )}
+            <div className="mt-6">
+              <h4 className="text-lg font-semibold mb-2">Online Donation Accounts (1–4)</h4>
+              {accounts.map((acc, index) => (
+                <div key={index} className="border border-gray-300 p-4 rounded mb-4">
+                  <select
+                    className="w-full border p-2 mb-2 text-gray-400"
+                    value={acc.type}
+                    onChange={(e) => handleAccountChange(index, 'type', e.target.value)}
+                    required
+                  >
+                    <option value="">Select Account Type</option>
+                    {accountOptions.map((opt, i) => (
+                      <option key={i} value={opt}>{opt}</option>
+                    ))}
+                  </select>
+                  <input
+                    className="w-full border rounded p-2 mb-2"
+                    type="text"
+                    value={acc.number}
+                    onChange={(e) => handleAccountChange(index, 'number', e.target.value)}
+                    placeholder="Account Number or IBAN"
+                    required
+                  />
+                  <input
+                    className="w-full border rounded p-2 mb-2"
+                    type="text"
+                    value={acc.holder}
+                    onChange={(e) => handleAccountChange(index, 'holder', e.target.value)}
+                    placeholder="Account Holder Name"
+                    required
+                  />
+                  {accounts.length > 1 && (
+                    <button
+                      type="button"
+                      className="text-red-600 hover:underline"
+                      onClick={() => handleRemoveAccount(index)}
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
+              ))}
+              {accounts.length < 4 && (
+                <button
+                  type="button"
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                  onClick={handleAddAccount}
+                >
+                  Add Another Account
+                </button>
+              )}
+            </div>
           </>
         )}
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {error && <p className="text-red-600 font-medium">{error}</p>}
 
-        <button type="submit">{role === 'donor' ? 'Submit Donation' : 'Submit Request'}</button>
-        <button type="button" onClick={onBack}>Back</button>
+        <div className="flex justify-between gap-4 mt-6">
+          <button
+            type="submit"
+            className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 w-full"
+          >
+            {role === 'donor' ? 'Submit Donation' : 'Submit Request'}
+          </button>
+          <button
+            type="button"
+            className="bg-gray-300 text-gray-800 px-6 py-2 rounded hover:bg-gray-400 w-full"
+            onClick={onBack}
+          >
+            Back
+          </button>
+        </div>
       </form>
     </div>
   );

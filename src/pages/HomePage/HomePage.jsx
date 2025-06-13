@@ -6,48 +6,51 @@ function HomePage() {
   const { setRole } = useUserRole();
 
   return (
-    <div className="bg-gray-50 min-h-screen pt-20 w-full">
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 text-center py-16">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4 animate-fade-in">
-          Welcome to <span className="text-indigo-600">Chariflow</span>
-        </h1>
-        <p className="text-lg text-gray-600 mb-10 max-w-2xl mx-auto">
-          A platform to give and receive with dignity. Help others or ask for help.
-        </p>
+    <div className="relative min-h-screen bg-cover bg-center" style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=1740&q=80")' }}>
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-60"></div>
 
-        {/* First row of buttons */}
-        <div className="flex flex-wrap justify-center gap-6">
-          <button
-            onClick={() => {
-              setRole('donor');
-              navigate('/donate');
-            }}
-            className="px-8 py-3 bg-black hover:bg-gray-800 text-white rounded-xl text-base font-medium shadow-lg transition duration-300"
-          >
-            I Want to Donate
-          </button>
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
+        <div className="text-center max-w-3xl text-white space-y-6 animate-fade-in">
+          <h1 className="text-5xl md:text-6xl font-extrabold drop-shadow-lg">
+            Welcome to <span className="text-indigo-400">Chariflow</span>
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-200 font-light max-w-2xl mx-auto">
+            A platform to give and receive with dignity. Help others or ask for help. Join us in making a difference.
+          </p>
 
-          <button
-            onClick={() => {
-              setRole('taker');
-              navigate('/donate');
-            }}
-            className="px-8 py-3 bg-black hover:bg-gray-800 text-white rounded-xl text-base font-medium shadow-lg transition duration-300"
-          >
-            I Need a Donation
-          </button>
-        </div>
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row justify-center gap-5 pt-4">
+            <button
+              onClick={() => {
+                setRole('donor');
+                navigate('/donate');
+              }}
+              className="px-8 py-3 bg-white text-black font-semibold rounded-full shadow-md hover:shadow-xl hover:scale-105 transition transform duration-300"
+            >
+              I Want to Donate
+            </button>
 
-        {/* Volunteer button on next line */}
-        <div className="mt-8">
-          <button
-            onClick={() => {
-              navigate('/volunteer');
-            }}
-            className="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-base font-semibold shadow-lg transition duration-300"
-          >
-            Volunteer Dashboard
-          </button>
+            <button
+              onClick={() => {
+                setRole('taker');
+                navigate('/donate');
+              }}
+              className="px-8 py-3 bg-white text-black font-semibold rounded-full shadow-md hover:shadow-xl hover:scale-105 transition transform duration-300"
+            >
+              I Need a Donation
+            </button>
+          </div>
+
+          {/* Volunteer Button */}
+          <div className="pt-6">
+            <button
+              onClick={() => navigate('/volunteer')}
+              className="px-8 py-3 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-full shadow-md hover:shadow-xl hover:scale-105 transition transform duration-300"
+            >
+              Volunteer Dashboard
+            </button>
+          </div>
         </div>
       </div>
     </div>
