@@ -2,48 +2,37 @@ import React, { useState } from 'react';
 import RequestFeed from '../../components/RequestFeed';
 import DonationForm from '../../components/DonationForm';
 import DonateSomethingElse from '../../components/DonateSomethingElse';
-import DonationCard from '../../components/DonationCard';
-import { useDonations } from '../../context/DonationsContext';
 
 function DonorPage() {
   const [view, setView] = useState('default'); // 'default' | 'donationForm' | 'somethingElse'
-  const { donations } = useDonations(); // ✅ donor-made donations
 
   return (
-    <div style={{ padding: '20px' }}>
-      {/* ===== Default View: Requests + Form + Donor Donations ===== */}
-      {view === 'default' && (
-        <>
-          {/* Request Section */}
-          <section style={{ marginBottom: '40px' }}>
-            <h2 style={{ borderBottom: '2px solid #ccc', paddingBottom: '8px' }}>Aid Requests from Others</h2>
+    <div className="pt-20 bg-gray-50 min-h-screen w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto space-y-12">
+        {/* Show RequestFeed only in default view */}
+        {view === 'default' && (
+          <div className="bg-white p-6 rounded-xl shadow-md">
             <RequestFeed />
-          </section>
+          </div>
+        )}
 
-          {/* Custom Donor Donations */}
-          {donations.length > 0 && (
-            <section style={{ marginBottom: '40px' }}>
-              <h2 style={{ borderBottom: '2px solid #ccc', paddingBottom: '8px' }}>Your Custom Donations</h2>
-              {donations.map((donation) => (
-                <DonationCard key={donation.id} request={donation} />
-              ))}
-            </section>
-          )}
-        </>
-      )}
+        {/* Show DonationForm in both default and donationForm view */}
+        {(view === 'default' || view === 'donationForm') && (
+          <div className="bg-white p-6 rounded-xl shadow-md">
+            <DonationForm
+              onCustomDonationClick={() => setView('somethingElse')}
+              onInteract={() => setView('donationForm')}
+            />
+          </div>
+        )}
 
-      {/* ===== DonationForm View ===== */}
-      {(view === 'default' || view === 'donationForm') && (
-        <DonationForm
-          onCustomDonationClick={() => setView('somethingElse')}
-          onInteract={() => setView('donationForm')}
-        />
-      )}
-
-      {/* ===== Something Else View ===== */}
-      {view === 'somethingElse' && (
-        <DonateSomethingElse onBack={() => setView('default')} />
-      )}
+        {/* Show custom donation form */}
+        {view === 'somethingElse' && (
+          <div className="bg-white p-6 rounded-xl shadow-md">
+            <DonateSomethingElse onBack={() => setView('default')} />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
