@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import '../index.css';
+import { useAuth } from '../context/AuthContext';
 
 function Login() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const formik = useFormik({
     initialValues: {
@@ -23,16 +27,43 @@ function Login() {
     }),
     onSubmit: async (values, { resetForm }) => {
       setIsSubmitting(true);
+      setErrorMessage(""); // Clear previous errors
+      
       try {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        const response = await fetch('http://localhost:3000/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: values.email,
+            password: values.password
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Login failed');
+        }
+
+        // Store the token (you might want to use more secure storage in production)
+        login({ token: data.token });
+        
         setSubmitSuccess(true);
         resetForm();
+        
+        navigate('/home') 
+        
       } catch (error) {
         console.error("Login error:", error);
+        setErrorMessage(error.message || 'Invalid email or password');
       } finally {
         setIsSubmitting(false);
-        setTimeout(() => setSubmitSuccess(false), 3000);
+        setTimeout(() => {
+          setSubmitSuccess(false);
+          setErrorMessage("");
+        }, 3000);
       }
     },
   });
@@ -86,6 +117,12 @@ function Login() {
             </div>
           )}
         </div>
+
+        {errorMessage && (
+          <div className="error-message">
+            <span className="error-icon">!</span> {errorMessage}
+          </div>
+        )}
 
         <button 
           type="submit" 

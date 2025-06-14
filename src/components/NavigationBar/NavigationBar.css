@@ -1,0 +1,24 @@
+.navigation-bar {
+    width: 50%;
+    float: right;
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    background-color: rgb(211, 213, 215);
+    border-radius: 20px;
+    padding: 5px 20px;
+}
+.navigation-bar a {
+  color: white;
+  text-decoration: none;
+}
+
+.navigation-bar a:hover {
+  color: rgb(188, 187, 189);
+}
+
+.navigation-bar li {
+  margin: 2px;
+  white-space: nowrap;
+  font-size: 10px;
+}

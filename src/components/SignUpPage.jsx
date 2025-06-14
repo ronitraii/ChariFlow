@@ -3,28 +3,13 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import '../index.css';
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
 function SignUpPage() {
   const [formData, setFormData] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [showOtherCityInput, setShowOtherCityInput] = useState(false);
-
-  // Major cities in Pakistan
-  const pakistanCities = [
-    "Islamabad",
-    "Karachi",
-    "Lahore",
-    "Peshawar",
-    "Quetta",
-    "Sukkur",
-    "Khairpur",
-    "Faisalabad",
-    "Rawalpindi",
-    "Multan",
-    "Hyderabad",
-    "Gujranwala",
-    "Other (Please specify)"
-  ];
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -33,7 +18,6 @@ function SignUpPage() {
       Contact: "",
       Password: "",
       City: "",
-      OtherCity: "",
     },    
     validationSchema: yup.object({
       Name: yup.string()
@@ -49,32 +33,48 @@ function SignUpPage() {
         .min(8, "Password must be at least 8 characters")
         .required("Password is required"),
       City: yup.string()
-        .required("Please select your city"),
-      OtherCity: yup.string()
-        .when('City', {
-          is: "Other (Please specify)",
-          then: yup.string().required("Please specify your city"),
-          otherwise: yup.string().notRequired()
-        }),
+        .required("Please enter your city"),
     }),
     onSubmit: async (values, { resetForm }) => {
       setIsSubmitting(true);
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setFormData([...formData, values]);
-      resetForm();
-      setIsSubmitting(false);
-      setSubmitSuccess(true);
-      setShowOtherCityInput(false);
-      setTimeout(() => setSubmitSuccess(false), 3000);
+      try {
+        // Prepare data for backend (note field name mapping)
+        const userData = {
+          name: values.Name,
+          email: values.Email,
+          phone: values.Contact,
+          password: values.Password,
+          city: values.City
+        };
+
+        const response = await fetch('http://localhost:3000/api/auth/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Signup failed');
+        }
+
+        // Success handling
+        setFormData([...formData, values]);
+        resetForm();
+        setSubmitSuccess(true);
+        setTimeout(() => setSubmitSuccess(false), 3000);
+        navigate('/Login'); // Redirect to login page after successful signup
+      } catch (error) {
+        // Error handling
+        alert(error.message || 'An error occurred during signup');
+      } finally {
+        setIsSubmitting(false);
+      }
     },
   });
-
-  // Handle city selection change
-  const handleCityChange = (e) => {
-    formik.handleChange(e);
-    setShowOtherCityInput(e.target.value === "Other (Please specify)");
-  };
 
   return (
     <div className="donation-signup-container">
@@ -166,46 +166,22 @@ function SignUpPage() {
 
         <div className="form-group">
           <label htmlFor="City">City</label>
-          <select
+          <input 
+            type="text" 
             id="City"
-            name="City"
-            onChange={handleCityChange}
+            name="City" 
+            onChange={formik.handleChange} 
+            value={formik.values.City} 
             onBlur={formik.handleBlur}
-            value={formik.values.City}
             className={formik.touched.City && formik.errors.City ? "error-input" : ""}
-          >
-            <option value="">Select your city</option>
-            {pakistanCities.map((city, index) => (
-              <option key={index} value={city}>{city}</option>
-            ))}
-          </select>
+            placeholder="Enter your city name"
+          />
           {formik.touched.City && formik.errors.City ? (
             <div className="error-message">
               <span className="error-icon">!</span> {formik.errors.City}
             </div>
           ) : null}
         </div>
-
-        {showOtherCityInput && (
-          <div className="form-group">
-            <label htmlFor="OtherCity">Specify Your City</label>
-            <input 
-              type="text" 
-              id="OtherCity"
-              name="OtherCity" 
-              onChange={formik.handleChange} 
-              value={formik.values.OtherCity} 
-              onBlur={formik.handleBlur}
-              className={formik.touched.OtherCity && formik.errors.OtherCity ? "error-input" : ""}
-              placeholder="Enter your city name"
-            />
-            {formik.touched.OtherCity && formik.errors.OtherCity ? (
-              <div className="error-message">
-                <span className="error-icon">!</span> {formik.errors.OtherCity}
-              </div>
-            ) : null}
-          </div>
-        )}
 
         <button 
           type="submit" 
@@ -225,9 +201,9 @@ function SignUpPage() {
           </div>
         )}
 
-<p className="form-footer">
-  Already have an account? <Link to="/Login" className="login-link">Log in</Link>
-</p>
+        <p className="form-footer">
+          Already have an account? <Link to="/Login" className="login-link">Log in</Link>
+        </p>
       </form>
     </div>
   );
