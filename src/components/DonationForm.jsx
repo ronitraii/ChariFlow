@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useUserRole } from '../context/UserRoleContext'; // adjust path as needed
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserRole } from "../context/UserRoleContext"; // adjust path as needed
 
 // Optional: Example DonationCard (not used in this component)
 const DonationCard = ({ donation }) => (
@@ -11,9 +11,13 @@ const DonationCard = ({ donation }) => (
   </div>
 );
 
-const DonationForm = ({ onCustomDonationClick, onInteract, availableDonations }) => {
-  const [amount, setAmount] = useState('');
-  const [message, setMessage] = useState('');
+const DonationForm = ({
+  onCustomDonationClick,
+  onInteract,
+  availableDonations,
+}) => {
+  const [amount, setAmount] = useState("");
+  const [message, setMessage] = useState("");
   const [hasInteracted, setHasInteracted] = useState(false);
   const presetAmounts = [10, 25, 50, 100];
 
@@ -29,11 +33,11 @@ const DonationForm = ({ onCustomDonationClick, onInteract, availableDonations })
 
   const handleBack = () => {
     setRole(null);
-    navigate('/');
+    navigate("/");
   };
 
   // If user is a taker
-  if (role === 'taker') {
+  if (role === "taker") {
     return (
       <div className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-md mt-6">
         <button
@@ -75,8 +79,8 @@ const DonationForm = ({ onCustomDonationClick, onInteract, availableDonations })
             onClick={() => setAmount(preset.toString())}
             className={`px-4 py-2 rounded border ${
               amount === preset.toString()
-                ? 'bg-blue-600 text-white border-blue-600'
-                : 'bg-white text-gray-700 border-gray-300 hover:bg-blue-100'
+                ? "bg-blue-600 text-white border-blue-600"
+                : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
             } transition`}
           >
             ${preset}
@@ -107,6 +111,46 @@ const DonationForm = ({ onCustomDonationClick, onInteract, availableDonations })
 
       <div className="flex flex-col gap-3">
         <button
+          onClick={() => {
+            if (amount) {
+              let authUser =  JSON.parse(localStorage.getItem("authUser"))
+              let token = authUser.token;
+              
+              let userId = authUser.userId;
+              console.log('Token: ', token)
+              console.log('userid: ', userId)
+              // Call the api
+              
+              fetch("http://localhost:3000/api/donations/", {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  userId: userId,
+                  amount: parseFloat(amount),
+                  message,
+                }),
+              })
+                .then((data) => {
+                  console.log(data)
+                  if (data.status == 201) {
+                    alert("Donation successful!");
+                    setAmount("");
+                    setMessage("");
+                  } else {
+                    alert("Donation failed. Please try again.");
+                  }
+                })
+                .catch((error) => {
+                  console.error("Error:", error);
+                  alert("An error occurred. Please try again later.");
+                });
+            } else {
+              alert("Please enter a donation amount.");
+            }
+          }}
           type="button"
           className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition"
         >
