@@ -2,7 +2,7 @@ import React from 'react';
 
 const Contact = () => {
     return (
-        <div className="min-h-screen bg-black py-16 px-6 md:px-20 mt-10">
+        <div className="min-h-screen bg-white py-16 px-6 md:px-20 mt-10">
             <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-8 md:p-12 grid md:grid-cols-2 gap-10">
                 
                 {/* Left - Contact Info */}

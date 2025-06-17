@@ -1,4 +1,5 @@
-import React from 'react';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 import { Routes, Route } from 'react-router-dom';
 import VerifyRequest from './pages/VerifyRequest/VerifyRequest';
 
@@ -17,36 +18,46 @@ import { RequestsProvider } from './context/RequestsContext.jsx';
 import { UserRoleProvider } from './context/UserRoleContext.jsx';
 import { DonationsProvider } from './context/DonationsContext.jsx'; // ✅ Added import
 import { ChatProvider } from './context/ChatContext';
+
 function App() {
   return (
-    <UserRoleProvider>
-      <RequestsProvider>
-        <ChatProvider>
-        <DonationsProvider> {/* ✅ Added wrapper */}
-          <Routes>
-            <Route element={<LayoutWithNav />}>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/home" element={<HomePage />} />
-              <Route path="/about" element={<AboutUsPage />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/success-stories" element={<SuccessStories />} />
-              <Route path="/donate" element={<DonationPage />} />
-              <Route path="/requests/:id" element={<RequestDetailPage />} />
-              <Route path="/verify-request" element={<VerifyRequest />} /> 
-               <Route path="/volunteer" element={<VolunteerDashboard />} />
-              <Route path="/chat/:requestId" element={<ChatPage />} />
-            
-            </Route>
+    <AuthProvider>
+      <UserRoleProvider>
+        <RequestsProvider>
+          <ChatProvider>
+            <DonationsProvider>
+              <Routes>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignUpPage />} />
 
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="*" element={<div>404 Not Found</div>} />
-          </Routes>
-        </DonationsProvider>
-        </ChatProvider>
-      </RequestsProvider>
-    </UserRoleProvider>
+                {/* Protected Routes */}
+                <Route
+                  element={
+                    <ProtectedRoute>
+                      <LayoutWithNav />
+                    </ProtectedRoute>
+                  }
+                >
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/home" element={<HomePage />} />
+                  <Route path="/about" element={<AboutUsPage />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/success-stories" element={<SuccessStories />} />
+                  <Route path="/donate" element={<DonationPage />} />
+                  <Route path="/requests/:id" element={<RequestDetailPage />} />
+                  <Route path="/verify-request" element={<VerifyRequest />} />
+                  <Route path="/volunteer" element={<VolunteerDashboard />} />
+                  <Route path="/chat/:requestId" element={<ChatPage />} />
+                </Route>
+
+                <Route path="*" element={<div>404 Not Found</div>} />
+              </Routes>
+            </DonationsProvider>
+          </ChatProvider>
+        </RequestsProvider>
+      </UserRoleProvider>
+    </AuthProvider>
   );
 }
 
-export default App;
+export default App

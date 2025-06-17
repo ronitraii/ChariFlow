@@ -1,0 +1,28 @@
+.outer-container {
+    display: flex;
+    justify-content: left;
+    width: 100%;
+    
+
+}
+
+
+img {
+    width: 150px;
+    height: 150px;
+}
+
+h1 {
+    color: palevioletred;
+    text-wrap: wrap;
+}
+.vertical-space {
+    height: 50px;
+}
+
+p {
+    font-size: 8px;
+    width: 400px;
+    color: grey;
+
+}
