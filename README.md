@@ -1,6 +1,6 @@
 Project partners
-  Ronit Rai
-  Sri Krishna Devi
+  Ronit Rai,
+  Sri Krishna Devi,
   Abdul Samian
 
 Command to run the project: npm run dev
